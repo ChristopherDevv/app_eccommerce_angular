@@ -1,0 +1,9 @@
+@media (min-width: 1024px) {
+    .bg-img-login {
+      background-image: none !important;
+}
+}
+
+.p-toastitem{
+    margin: 0 auto;
+}
