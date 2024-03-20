@@ -1,3 +1,65 @@
-@tailwind base;
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+/* @tailwind base; */
 @tailwind components;
 @tailwind utilities;
+
+h1, h2, h3, h4, h5 {
+    padding: 0%;
+    margin: 0%;
+}
+p, a {
+    padding: 0%;
+    margin: 0%;
+    text-decoration: none;
+    color: #4b5563;
+}
+label {
+    margin: 0%;
+}
+
+button {
+    border: none;
+}
+
+/* START LOGIN PAGE */
+
+.password-field {
+    position: relative;
+}
+.p-password {
+    width: 100% !important;
+}
+.password-icon {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10 !important;
+}
+.p-inputtext{
+    padding-left: 40px;
+    width: 100%;
+}
+
+button.p-ripple.p-element.p-carousel-next.p-link.ng-star-inserted .p-icon{
+    color: white !important;
+} 
+button.p-ripple.p-element.p-carousel-prev.p-link.ng-star-inserted .p-icon{
+    color: white !important;
+}
+button.p-ripple.p-element.p-carousel-next.p-link.ng-star-inserted .p-icon,
+button.p-ripple.p-element.p-carousel-prev.p-link.ng-star-inserted .p-icon {
+    color: white !important;
+    transition: color 0.3s ease;
+}
+
+button.p-ripple.p-element.p-carousel-next.p-link.ng-star-inserted:hover .p-icon,
+button.p-ripple.p-element.p-carousel-prev.p-link.ng-star-inserted:hover .p-icon {
+    color: darkgray !important;
+}
+
+/* END LOGIN PAGE */
+
