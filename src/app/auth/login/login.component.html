@@ -37,7 +37,7 @@
                         <label class="tw-block tw-font-medium tw-mb-2" for="username"><span class="tw-text-red-500">* </span>Username</label>
                         <p-iconField id="username" iconPosition="left">
                             <p-inputIcon styleClass="pi pi-user" />
-                            <input class="tw-text-sm tw-w-full" type="text" pInputText placeholder="Username" />
+                            <input [(ngModel)]="username" name="username" class="tw-text-sm tw-w-full" type="text" pInputText placeholder="Username">
                         </p-iconField>
                     </div>
                     <div class="tw-text-sm tw-mb-6">
@@ -48,7 +48,7 @@
     
                         <div class="password-field">
                             <i class="pi pi-lock password-icon tw-text-[#6B7280]"></i>
-                            <p-password [toggleMask]="true" [feedback]="true" placeholder="••••••"></p-password>
+                            <p-password [(ngModel)]="password" name="password" [toggleMask]="true" [feedback]="true" placeholder="••••••"></p-password>
                           </div>            
                     </div>
                     <div class="tw-flex tw-items-center tw-justify-between">
@@ -56,8 +56,8 @@
                             <p class="tw-text-xs tw-text-white lg:tw-text-gray-600">Don't have an account? <span class="tw-text-blue-300 lg:tw-text-blue-500">Sign Up</span></p>
                         </div>
                         <div class="card">
-                            <p-toast [breakpoints]="{'920px': {width: '70%'}}" position="top-right"></p-toast>
-                            <app-primary-button-md [buttonText]="'Login'" (click)="show()" label="Show"></app-primary-button-md>
+                            <p-toast [breakpoints]="{'920px': {width: '80%'}}" position="top-right"></p-toast>
+                            <app-primary-button-md [buttonText]="'Login'" (click)="handleLogin()" label="Show"></app-primary-button-md>
                         </div>
                     </div>
                 </form>

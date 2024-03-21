@@ -40,6 +40,18 @@ import { MessagesModule } from 'primeng/messages';
 export default class LoginComponent {
   sidebarVisible: boolean = false;
 
+  username:string = '';
+  password:string = '';
+
+  handleLogin() {
+     if(!this.username || !this.password) {
+       this.show('error', 'Error', '¡Por favor, rellena todos los campos!');
+     }
+      else {
+        this.show('success', '¡Bienvenido!', '¡Has iniciado sesión correctamente!');
+      }
+  }
+
   testimonials = [
     {
       name: 'Juan Pérez',
@@ -67,11 +79,11 @@ export default class LoginComponent {
   constructor(private messageService: MessageService) {}
 
   // Método para mostrar el toast
-  show() {
+  show(severity:string, summary:string, detail:string) {
     this.messageService.add({
-      severity: 'success',
-      summary: 'Éxito',
-      detail: '¡Datos correctos!'
+      severity: severity,
+      summary: summary,
+      detail: detail
     });
   }
 }
