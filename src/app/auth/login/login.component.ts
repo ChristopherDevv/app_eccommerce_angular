@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { PasswordModule } from 'primeng/password';
 import { PrimaryButtonMdComponent } from 'app/components/primary-button-md/primary-button-md.component';
 import { CarouselModule } from 'primeng/carousel';
-
+import { PrimarySpinnerComponent } from 'app/components/primary-spinner/primary-spinner.component';
 
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
+import { AuthService } from '@features/api/auth.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -21,16 +21,15 @@ import { MessagesModule } from 'primeng/messages';
   imports: [
     InputTextModule, 
     ButtonModule, 
-    CalendarModule, 
     ToastModule, 
     MessagesModule, 
-    FloatLabelModule, 
     FormsModule,
     IconFieldModule,
     InputIconModule,
     PasswordModule,
     PrimaryButtonMdComponent,
-    CarouselModule
+    CarouselModule,
+    PrimarySpinnerComponent
   ], 
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
@@ -38,17 +37,47 @@ import { MessagesModule } from 'primeng/messages';
 
 })
 export default class LoginComponent {
-  sidebarVisible: boolean = false;
+  constructor(private messageService: MessageService, private loginSvc: AuthService) {}
+  messages: any[] = [];
 
-  username:string = '';
-  password:string = '';
+  sidebarVisible: boolean = false;
+  showSpinner: boolean = false;
+
+  creadentials = {
+    username:'',
+    password: ''
+  };
+
+  formatFields() {
+    this.creadentials = Object.fromEntries(
+       Object.entries(this.creadentials).map(([key, value]) => [key, value = ''])
+    ) as any;
+  }
+
 
   handleLogin() {
-     if(!this.username || !this.password) {
-       this.show('error', 'Error', '¡Por favor, rellena todos los campos!');
+    this.creadentials = Object.fromEntries(
+      Object.entries(this.creadentials).map(([key, value]) => [key, value.replace(/\s/g, '')])
+    ) as any;
+    
+     if(Object.values(this.creadentials).some(value => value === '')) {
+       this.show('error', 'Error', 'Please, fill in all fields!');
      }
       else {
-        this.show('success', '¡Bienvenido!', '¡Has iniciado sesión correctamente!');
+        this.showSpinner = true;
+
+        this.loginSvc.login(this.creadentials.username, this.creadentials.password).pipe(
+          finalize(() => this.showSpinner = false)
+        ).subscribe(
+          loginResponse =>  {
+            this.show('success', 'Success', 'Login successful!');
+            console.log(loginResponse);
+          },
+          error => {
+            this.show('error', 'Error', 'An error ocurred');
+            this.formatFields();
+          }
+        );
       }
   }
 
@@ -74,9 +103,6 @@ export default class LoginComponent {
       image: 'https://primefaces.org/cdn/primeng/images/demo/avatar/ionibowcher.png'
     }
   ];
-
-  messages: any[] = []; // Puedes ajustar el tipo según tus necesidades
-  constructor(private messageService: MessageService) {}
 
   // Método para mostrar el toast
   show(severity:string, summary:string, detail:string) {

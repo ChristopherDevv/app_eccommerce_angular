@@ -26,10 +26,15 @@
         <div class="tw-w-full tw-h-auto lg:tw-hidden">
             <img class="tw-w-44 tw-h-auto" src="/assets/img/primary_logo_white2.svg" alt="primary logo white">
         </div>
-        <div class="tw-w-full lg:tw-w-[40%] tw-h-1/2 tw-flex tw-items-center tw-justify-center"> <!-- tw-border tw-shadow-md tw-rounded-lg -->
+        <div class="tw-w-full lg:tw-w-[45%] tw-h-1/2 tw-flex tw-items-center tw-justify-center"> <!-- tw-border tw-shadow-md tw-rounded-lg -->
             <div class="tw-w-full tw-text-white lg:tw-text-gray-600">
                 <div class="tw-mb-5">
-                    <h1 class="tw-font-semibold tw-text-2xl tw-mb-1">Sign in</h1>
+                    <div class="tw-flex tw-items-center tw-gap-5 tw-mb-1 tw-h-10">
+                        <h1 class="tw-font-semibold tw-text-2xl">Sign in</h1>
+                        @if(showSpinner) {
+                            <app-primary-spinner></app-primary-spinner>
+                        }
+                    </div>
                     <h2 class="tw-opacity-70 lg:tw-opacity-50 tw-text-base tw-font-normal">Enter your creadential to get access</h2>
                 </div>
                 <form action="">
@@ -37,7 +42,7 @@
                         <label class="tw-block tw-font-medium tw-mb-2" for="username"><span class="tw-text-red-500">* </span>Username</label>
                         <p-iconField id="username" iconPosition="left">
                             <p-inputIcon styleClass="pi pi-user" />
-                            <input [(ngModel)]="username" name="username" class="tw-text-sm tw-w-full" type="text" pInputText placeholder="Username">
+                            <input [(ngModel)]="creadentials.username" name="username" class="tw-text-sm tw-w-full" type="text" pInputText placeholder="Username">
                         </p-iconField>
                     </div>
                     <div class="tw-text-sm tw-mb-6">
@@ -48,12 +53,12 @@
     
                         <div class="password-field">
                             <i class="pi pi-lock password-icon tw-text-[#6B7280]"></i>
-                            <p-password [(ngModel)]="password" name="password" [toggleMask]="true" [feedback]="true" placeholder="••••••"></p-password>
+                            <p-password [(ngModel)]="creadentials.password" name="password" [toggleMask]="true" [feedback]="true" placeholder="••••••"></p-password>
                           </div>            
                     </div>
                     <div class="tw-flex tw-items-center tw-justify-between">
                         <div class="tw-w-1/2">
-                            <p class="tw-text-xs tw-text-white lg:tw-text-gray-600">Don't have an account? <span class="tw-text-blue-300 lg:tw-text-blue-500">Sign Up</span></p>
+                            <a href="#" class="tw-text-xs tw-text-white lg:tw-text-gray-600">Don't have an account? <span class="tw-text-blue-300 lg:tw-text-blue-500">Sign Up</span></a>
                         </div>
                         <div class="card">
                             <p-toast [breakpoints]="{'920px': {width: '80%'}}" position="top-right"></p-toast>
