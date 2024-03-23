@@ -14,6 +14,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { AuthService } from '@features/api/auth.service';
 import { finalize } from 'rxjs';
+import { Route, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,8 @@ import { finalize } from 'rxjs';
     PasswordModule,
     PrimaryButtonMdComponent,
     CarouselModule,
-    PrimarySpinnerComponent
+    PrimarySpinnerComponent,
+    RouterLink
   ], 
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
@@ -37,7 +39,7 @@ import { finalize } from 'rxjs';
 
 })
 export default class LoginComponent {
-  constructor(private messageService: MessageService, private loginSvc: AuthService) {}
+  constructor(private messageService: MessageService, private loginSvc: AuthService, private router: Router) {}
   messages: any[] = [];
 
   sidebarVisible: boolean = false;
@@ -70,8 +72,12 @@ export default class LoginComponent {
           finalize(() => this.showSpinner = false)
         ).subscribe(
           loginResponse =>  {
+            this.loginSvc.appToken = loginResponse.token;
             this.show('success', 'Success', 'Login successful!');
             console.log(loginResponse);
+            setTimeout(() => {
+              this.router.navigate(['/products']);
+            }, 700);
           },
           error => {
             this.show('error', 'Error', 'An error ocurred');

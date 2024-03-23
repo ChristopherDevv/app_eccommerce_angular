@@ -9,9 +9,15 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   constructor(private http: HttpClient) { }
+  appToken: string = '';
 
   public login(username: string, password: string): Observable<any> {
     const credentials = { username, password };
     return this.http.post(`${environment.apiLoginURL}`, credentials);
   }
+
+  public isAuthenticated(): boolean {
+    return this.appToken !== '';
+  }
+  
 }
